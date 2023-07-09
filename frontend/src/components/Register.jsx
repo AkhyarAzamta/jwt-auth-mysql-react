@@ -11,7 +11,7 @@ function Register() {
     const [msg, setMsg] = useState('');
     const navigate = useNavigate();
 
-    const Register = async(e) => {
+    const Register = async (e) => {
         e.preventDefault();
         try {
             await axios.post('http://localhost:4500/users', {
@@ -23,41 +23,44 @@ function Register() {
             navigate("/")
             // console.log('halo gaes')
         } catch (error) {
-            if(error.response){
+            if (error.response) {
                 setMsg(error.response.data.msg)
             }
         }
-      }
+    }
     return (
         <section className='hero has-background-grey-light is-fullheight is-fullwidth'>
             <div className='hero-body'>
                 <div className='container'>
                     <div className='columns is-centered'>
                         <div className='column is-4-desktop'>
-                            <p className='has-text-centered'>{msg}</p>
-                            <form onSubmit={ Register } className='box'>
+                            <form onSubmit={Register} className='box'>
+                                <p className='has-text-centered'>{msg}</p>
                                 <div className='field mt-5'>
                                     <label className='label'>Name</label>
                                     <div className='controls'>
-                                        <input type="text" className='input' placeholder='Name' value={name} onChange={(e)=> setName(e.target.value)} />
+                                        <input required onInvalid={F => F.target.setCustomValidity('Masukan Nama Anda')}
+                                            onInput={F => F.target.setCustomValidity('')} type="text" className='input' placeholder='Name' value={name} onChange={(e) => setName(e.target.value)} />
                                     </div>
                                 </div>
                                 <div className='field mt-5'>
                                     <label className='label'>Email</label>
                                     <div className='controls'>
-                                        <input type="text" className='input' placeholder='Email' value={email} onChange={(e)=> setEmail(e.target.value)}/>
+                                        <input type="email" required onInvalid={F => F.target.setCustomValidity('Masukan Email yang Valid: contoh@gmail.com')}
+                                            onInput={F => F.target.setCustomValidity('')} className='input' placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} />
                                     </div>
                                 </div>
                                 <div className='field mt-5'>
                                     <label className='label' >Password</label>
                                     <div className='controls'>
-                                        <input type="password" className='input' placeholder='Password' value={password} onChange={(e)=> setPassword(e.target.value)} />
+                                        <input required pattern=".{8,}" title="Password harus memiliki minimal 8 karakter" type="password" className='input' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
                                     </div>
                                 </div>
                                 <div className='field mt-5'>
                                     <label className='label' >Confirm Password</label>
                                     <div className='controls'>
-                                        <input type="password" className='input' placeholder='Confirm Password' value={confPassword} onChange={(e)=> setConfPassword(e.target.value)} />
+                                        <input onInvalid={F => F.target.setCustomValidity('Konfirmasi Password')}
+                                            onInput={F => F.target.setCustomValidity('')} type="password" className='input' placeholder='Confirm Password' value={confPassword} onChange={(e) => setConfPassword(e.target.value)} />
                                     </div>
                                 </div>
                                 <div className='field mt-5'>
