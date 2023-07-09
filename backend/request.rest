@@ -1,0 +1,5 @@
+GET http://localhost:4500/users
+Authorization: Bearer
+
+###
+GET http://localhost:4500/users
