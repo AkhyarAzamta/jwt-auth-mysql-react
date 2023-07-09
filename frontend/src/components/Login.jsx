@@ -8,6 +8,7 @@ function Login() {
     const [password, setPassword] = useState('');
     const [msg, setMsg] = useState('');
     const navigate = useNavigate();
+    const [eror, setEror] = useState(null);
 
     const Auth = async (e) => {
         e.preventDefault();
@@ -17,11 +18,14 @@ function Login() {
                 password: password
             })
             navigate("/dashboard")
-            // console.log('halo gaes')
         } catch (error) {
             if (error.response) {
-                setMsg(error.response.data.msg)
-            }
+                setMsg(error.response.data.msg);
+                setEror(null);
+              } else {
+                setEror('Tidak terhubung dengan server. Mohon coba lagi beberapa saat');
+                setMsg('');
+              }
         }
     }
     return (
@@ -31,7 +35,7 @@ function Login() {
                     <div className='columns is-centered'>
                         <div className='column is-4-desktop'>
                             <form onSubmit={Auth} className='box'>
-                                <p className='has-text-centered'>{msg}</p>
+                                <p className='has-text-centered'>{eror ? eror : msg}</p>
                                 <div className='field mt-5'>
                                     <label className='label'>Email</label>
                                     <div className='controls'>
